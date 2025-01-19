@@ -1,13 +1,14 @@
 # X Enhancer
 A browser extension to customize X (Twitter) by hiding unwanted UI elements.
 
+[![Latest Release](https://img.shields.io/github/v/release/shanksxz/x-enhancer-extension)](https://github.com/shanksxz/x-enhancer-extension/releases/latest)
+
 ## Features
 - Hide specific sidebar buttons
 - Remove right sidebar elements
 - Dark mode support
 - Settings sync across sessions
 - Cross-browser compatibility
-
 
 ## Development
 This project is built with:
@@ -17,6 +18,18 @@ This project is built with:
 - Tailwind CSS for styling
 - WebExtension API (compatible with Chrome Extensions Manifest V3 and Firefox)
 
+
+## Installation
+
+### From Releases
+1. Download the latest release from [GitHub Releases](https://github.com/shanksxz/x-enhancer-extension/releases)
+2. Extract the zip file
+3. Load in your browser:
+   - Chrome/Edge: Load unpacked from `chrome://extensions`
+   - Firefox: Load temporary addon from `about:debugging`
+
+
+## Building from Source
 
 ### Getting Started
 
