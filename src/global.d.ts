@@ -1,14 +1,22 @@
 declare global {
-    interface TwitterButton {
+    export interface TwitterButton {
         id: string;
         label: string;
-        ariaLabel?: string;
+        ariaLabel: string;
         selector?: string;
     }
 
-    interface Settings {
+    export interface RightSidebarElement {
+        id: string;
+        label: string;
+        category: string;
+    }
+
+    export interface Settings {
         isEnabled: boolean;
         hiddenButtons: string[];
+        hiddenRightElements: string[];
+        removeGrokSuggestions: boolean;
     }
 
     interface Window {

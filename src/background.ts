@@ -1,16 +1,18 @@
-import browser from 'webextension-polyfill';
+import browser from "webextension-polyfill";
 
 browser.runtime.onInstalled.addListener(() => {
     console.log("Extension installed");
 });
 
 function injectContentScript(tabId: number) {
-    browser.scripting.executeScript({
-        target: { tabId: tabId },
-        files: ["content.js"],
-    }).catch((err) => {
-        console.error("Error injecting content script:", err);
-    });
+    browser.scripting
+        .executeScript({
+            target: { tabId: tabId },
+            files: ["content.js"],
+        })
+        .catch((err) => {
+            console.error("Error injecting content script:", err);
+        });
 }
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
