@@ -1,24 +1,15 @@
 # X Enhancer
-
-A browser extension that allows you to customize your X (formerly Twitter) experience by hiding unwanted buttons from the sidebar. Compatible with Chrome, Edge, and Firefox.
-
-## Table of Contents
-1. [Installation](#installation)
-2. [Features](#features)
-3. [Development](#development)
-5. [Contributing](#contributing)
-6. [License](#license)
+A browser extension to customize X (Twitter) by hiding unwanted UI elements.
 
 ## Features
+- Hide specific sidebar buttons
+- Remove right sidebar elements
+- Dark mode support
+- Settings sync across sessions
+- Cross-browser compatibility
 
-- Toggle specific sidebar buttons on/off
-- Persistent settings across browser sessions
-- Support for both X.com and Twitter.com domains
-- Clean, minimal UI with dark mode support
-- Cross-browser compatibility (Chrome, Edge, Firefox)
 
 ## Development
-
 This project is built with:
 - React + TypeScript
 - Vite for bundling
@@ -45,21 +36,21 @@ npm install
 npm run build
 ```
 
-### Loading the Extension
+## Loading the Extension
 
-## Chrome/Edge
+### Chrome/Edge
 1. Build the project
 2. Open Chrome/Edge and navigate to `chrome://extensions`
 3. Enable "Developer mode"
 4. Click "Load unpacked" and select the `dist` directory
 
-## Firefox
+### Firefox
 1. Build the project
 2. Open Firefox and navigate to `about:debugging`
 3. Click "This Firefox" > "Load Temporary Add-on..."
 4. Select the `dist/manifest.json` file
 
-### Troubleshooting
+## Troubleshooting
 if you encounter any issues:
 - Check the browser's console for errors messages
 - Ensure you have the latest version of the supported browsers
