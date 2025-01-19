@@ -13,12 +13,11 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: path.resolve(__dirname, './index.html'),
-        content: path.resolve(__dirname, 'src/content.ts'),
         background: path.resolve(__dirname, 'src/background.ts')
       },
       output: {
         entryFileNames: ({ name }) => {
-          if(['content', 'background'].includes(name)) {
+          if(['background'].includes(name)) {
             return `[name].js`;
           }
           return `assets/[name]-[hash].js`;

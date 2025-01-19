@@ -28,7 +28,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --config vite.config-content.ts",
     "format-and-lint": "biome check ./src",
     "format-and-lint:fix": "biome check --write ./src",
     "preview": "vite preview"

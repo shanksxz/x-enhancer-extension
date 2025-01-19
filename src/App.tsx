@@ -6,6 +6,8 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useEffect, useState } from "react";
 import { TWITTER_BUTTONS } from "./utils";
+import browser from "webextension-polyfill";
+
 
 export default function App() {
     const [settings, setSettings] = useState<Settings>({
@@ -14,29 +16,53 @@ export default function App() {
     });
 
     useEffect(() => {
-        chrome.storage.sync.get(["isEnabled", "hiddenButtons"], (result) => {
-            setSettings({
-                isEnabled: result.isEnabled || false,
-                hiddenButtons: result.hiddenButtons || [],
+        browser.storage.sync
+            .get(["isEnabled", "hiddenButtons"])
+            .then((result: Partial<Settings>) => {
+                console.log("Loaded settings:", result);
+                setSettings({
+                    isEnabled: result.isEnabled ?? false,
+                    hiddenButtons: result.hiddenButtons ?? [],
+                });
+            })
+            .catch((error) => {
+                console.error("Error loading settings:", error);
             });
-        });
     }, []);
 
     useEffect(() => {
-        chrome.storage.sync.set(settings);
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const currentTab = tabs[0];
-            if (
-                currentTab?.id &&
-                (currentTab.url?.includes("x.com") || currentTab.url?.includes("twitter.com"))
-            ) {
-                chrome.tabs.sendMessage(currentTab.id, {
-                    type: "TOGGLE_BUTTONS",
-                    ...settings,
-                });
-            }
-        });
+        console.log("Saving settings:", settings);
+        browser.storage.sync.set({ ...settings })
+            .then(() => {
+                console.log("Settings saved successfully");
+            })
+            .catch((error) => {
+                console.error("Error saving settings:", error);
+            });
+
+        browser.tabs
+            .query({ active: true, currentWindow: true })
+            .then((tabs) => {
+                const currentTab = tabs[0];
+                if (
+                    currentTab?.id &&
+                    (currentTab.url?.includes("x.com") ||
+                        currentTab.url?.includes("twitter.com"))
+                ) {
+                    return browser.tabs.sendMessage(currentTab.id, {
+                        type: "TOGGLE_BUTTONS",
+                        ...settings,
+                    });
+                }
+            })
+            .then(() => {
+                console.log("Message sent to content script");
+            })
+            .catch((error) => {
+                console.error("Error sending message to content script:", error);
+            });
     }, [settings]);
+
 
     const handleToggle = (checked: boolean) => {
         setSettings((prev) => ({ ...prev, isEnabled: checked }));
@@ -65,7 +91,9 @@ export default function App() {
     return (
         <Card className="w-[280px] shadow-none rounded-lg">
             <CardHeader className="pb-3 space-y-1.5">
-                <CardTitle className="text-base font-semibold">Twitter Button Hider</CardTitle>
+                <CardTitle className="text-base font-semibold">
+                    Twitter Button Hider
+                </CardTitle>
                 <CardDescription className="text-xs">
                     Hide unwanted buttons from Twitter sidebars
                 </CardDescription>
@@ -98,7 +126,7 @@ export default function App() {
                                 Select All
                             </Label>
                         </div>
-                        {TWITTER_BUTTONS.map((button) => (
+                        {TWITTER_BUTTONS.map((button: TwitterButton) => (
                             <div key={button.id} className="flex items-center space-x-2">
                                 <Checkbox
                                     id={button.id}

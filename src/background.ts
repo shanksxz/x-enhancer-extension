@@ -1,24 +1,19 @@
-chrome.runtime.onInstalled.addListener(() => {
+import browser from 'webextension-polyfill';
+
+browser.runtime.onInstalled.addListener(() => {
     console.log("Extension installed");
 });
 
 function injectContentScript(tabId: number) {
-    chrome.scripting.executeScript(
-        {
-            target: { tabId: tabId },
-            files: ["content.js"],
-        },
-        () => {
-            if (chrome.runtime.lastError) {
-                console.error("Error injecting content script:", chrome.runtime.lastError.message);
-            } else {
-                console.log("Content script injected successfully");
-            }
-        },
-    );
+    browser.scripting.executeScript({
+        target: { tabId: tabId },
+        files: ["content.js"],
+    }).catch((err) => {
+        console.error("Error injecting content script:", err);
+    });
 }
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     if (
         changeInfo.status === "complete" &&
         tab.url &&
