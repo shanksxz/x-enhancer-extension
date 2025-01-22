@@ -11,6 +11,7 @@ export const TWITTER_BUTTONS: TwitterButton[] = [
     { id: "premium", label: "Premium", ariaLabel: "Premium" },
     { id: "verified", label: "Verified Orgs", ariaLabel: "Verified Orgs" },
     { id: "profile", label: "Profile", ariaLabel: "Profile" },
+    { id: "buisness", label: "Buisness", ariaLabel: "Business"},
     {
         id: "more",
         label: "More",
